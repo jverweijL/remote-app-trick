@@ -4,12 +4,31 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+const ELEMENT_ID = 'lfr-test';
+
+class WebComponent extends HTMLElement {
+  connectedCallback() {
+    const root = ReactDOM.createRoot(this);
+    root.render(
+      <React.StrictMode>
+        <App 
+          p1={this.getAttribute('p1')}        
+        />
+      </React.StrictMode>
+    );
+  }
+}
+
+if (!customElements.get(ELEMENT_ID)) {
+  customElements.define(ELEMENT_ID, WebComponent);
+}
+
+// const root = ReactDOM.createRoot(document.getElementById('root'));
+// root.render(
+//   <React.StrictMode>
+//     <App/>
+//   </React.StrictMode>
+// );
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
